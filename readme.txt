@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
 Requires Plugins: woocommerce
-Stable tag: 1.0.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ CRUD API, so it works with both the legacy post storage and HPOS.
 3. The order metabox showing invoice status and the invoice PDF download.
 
 == Changelog ==
+
+= 1.1.0 =
+* BREAKING CHANGE: all hooks, options, transients, AJAX actions and meta keys now use the unique arbictus_efin_ prefix, so they cannot clash with other plugins. Sync data stored by earlier versions is not carried over.
+* Fix: the plugin no longer writes a compiled container into its own directory, which failed on read-only installs.
 
 = 1.0.3 =
 * Fix: two sync runs for the same order could both proceed at once and register a duplicate invoice; the sync lock is now claimed atomically in the database.
