@@ -53,7 +53,7 @@ test.describe( 'e-Financials order sync UI', () => {
 		await page.goto( '/wp-admin/edit.php?post_type=shop_order' );
 
 		const column = page
-			.locator( 'th.column-ef_invoice, thead th' )
+			.locator( 'th.column-arbictus_efin_invoice, thead th' )
 			.filter( { hasText: 'e-Financials' } );
 
 		if ( ( await column.count() ) === 0 ) {

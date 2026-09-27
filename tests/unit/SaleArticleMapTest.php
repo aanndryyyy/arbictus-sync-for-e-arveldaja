@@ -24,7 +24,7 @@ final class SaleArticleMapTest extends TestCase {
 	 */
 	private function withSettings( array $settings ): SettingsRepository {
 
-		$GLOBALS['ef_test_options'] = [ SettingsRepository::OPTION_KEY => $settings ];
+		$GLOBALS['arbictus_efin_test_options'] = [ SettingsRepository::OPTION_KEY => $settings ];
 
 		return new SettingsRepository();
 	}
@@ -34,7 +34,7 @@ final class SaleArticleMapTest extends TestCase {
 	 */
 	protected function tearDown(): void {
 
-		unset( $GLOBALS['ef_test_options'] );
+		unset( $GLOBALS['arbictus_efin_test_options'] );
 
 		parent::tearDown();
 	}

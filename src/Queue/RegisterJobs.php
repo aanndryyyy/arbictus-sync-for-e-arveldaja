@@ -32,7 +32,7 @@ class RegisterJobs implements ServiceInterface {
 	 * Private wc_get_orders() flag standing in for the meta_query that post
 	 * storage discards. Never sent to HPOS, which rejects unknown query vars.
 	 */
-	private const PENDING_SYNC_QUERY_VAR = 'ef_pending_sync';
+	private const PENDING_SYNC_QUERY_VAR = 'arbictus_efin_pending_sync';
 
 	/**
 	 * How many candidates the sweep reads, and how many it may enqueue. The gap
@@ -88,7 +88,7 @@ class RegisterJobs implements ServiceInterface {
 	 */
 	public function add_cron_schedules( array $schedules ): array {
 
-		$schedules['ef_every_five_minutes'] = [
+		$schedules['arbictus_efin_every_five_minutes'] = [
 			'interval' => 300,
 			'display'  => __( 'Every five minutes', 'arbictus-sync-for-e-arveldaja' ),
 		];

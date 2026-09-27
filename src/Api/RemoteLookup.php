@@ -50,7 +50,7 @@ class RemoteLookup {
 	/**
 	 * Transient key prefix, scoped per environment.
 	 */
-	public const CACHE_PREFIX = 'ef_lookup_';
+	public const CACHE_PREFIX = 'arbictus_efin_lookup_';
 
 	/**
 	 * Find an existing product id by its catalogue code.

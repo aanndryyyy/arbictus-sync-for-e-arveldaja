@@ -298,24 +298,24 @@ function syncOrderNow( orderId ) {
 	const php = `
 $order_id = ${ Number( orderId ) };
 try {
-	do_action( 'ef_sync_order_to_efinancials', $order_id );
+	do_action( 'arbictus_efin_sync_order_to_efinancials', $order_id );
 	$order = wc_get_order( $order_id );
 	echo json_encode( array(
-		'ok' => (bool) $order->get_meta( '_ef_sale_invoice_id' ),
-		'invoiceId' => (string) $order->get_meta( '_ef_sale_invoice_id' ),
-		'invoiceNumber' => (string) $order->get_meta( '_ef_sale_invoice_number' ),
-		'clientsId' => (string) $order->get_meta( '_ef_clients_id' ),
-		'paymentMode' => (string) $order->get_meta( '_ef_payment_mode' ),
-		'error' => (string) $order->get_meta( '_ef_last_error' ),
-		'syncedAt' => (string) $order->get_meta( '_ef_synced_at' ),
+		'ok' => (bool) $order->get_meta( '_arbictus_efin_sale_invoice_id' ),
+		'invoiceId' => (string) $order->get_meta( '_arbictus_efin_sale_invoice_id' ),
+		'invoiceNumber' => (string) $order->get_meta( '_arbictus_efin_sale_invoice_number' ),
+		'clientsId' => (string) $order->get_meta( '_arbictus_efin_clients_id' ),
+		'paymentMode' => (string) $order->get_meta( '_arbictus_efin_payment_mode' ),
+		'error' => (string) $order->get_meta( '_arbictus_efin_last_error' ),
+		'syncedAt' => (string) $order->get_meta( '_arbictus_efin_synced_at' ),
 	) );
 } catch ( Throwable $e ) {
 	$order = wc_get_order( $order_id );
 	echo json_encode( array(
 		'ok' => false,
 		'error' => $e->getMessage(),
-		'invoiceId' => $order ? (string) $order->get_meta( '_ef_sale_invoice_id' ) : '',
-		'lastError' => $order ? (string) $order->get_meta( '_ef_last_error' ) : '',
+		'invoiceId' => $order ? (string) $order->get_meta( '_arbictus_efin_sale_invoice_id' ) : '',
+		'lastError' => $order ? (string) $order->get_meta( '_arbictus_efin_last_error' ) : '',
 	) );
 }
 `;
@@ -340,12 +340,12 @@ function getOrderSyncMeta( orderId ) {
 $order = wc_get_order( ${ Number( orderId ) } );
 if ( ! $order ) { echo '{}'; return; }
 echo json_encode( array(
-	'invoiceId' => (string) $order->get_meta( '_ef_sale_invoice_id' ),
-	'invoiceNumber' => (string) $order->get_meta( '_ef_sale_invoice_number' ),
-	'clientsId' => (string) $order->get_meta( '_ef_clients_id' ),
-	'paymentMode' => (string) $order->get_meta( '_ef_payment_mode' ),
-	'error' => (string) $order->get_meta( '_ef_last_error' ),
-	'syncedAt' => (string) $order->get_meta( '_ef_synced_at' ),
+	'invoiceId' => (string) $order->get_meta( '_arbictus_efin_sale_invoice_id' ),
+	'invoiceNumber' => (string) $order->get_meta( '_arbictus_efin_sale_invoice_number' ),
+	'clientsId' => (string) $order->get_meta( '_arbictus_efin_clients_id' ),
+	'paymentMode' => (string) $order->get_meta( '_arbictus_efin_payment_mode' ),
+	'error' => (string) $order->get_meta( '_arbictus_efin_last_error' ),
+	'syncedAt' => (string) $order->get_meta( '_arbictus_efin_synced_at' ),
 ) );
 `;
 	const raw = wpEval( php );

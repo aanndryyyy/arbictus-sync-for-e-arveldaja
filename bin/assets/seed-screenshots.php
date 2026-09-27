@@ -86,10 +86,10 @@ update_option(
  * plugin writes after a successful lookup — the screenshot then shows what a
  * configured install looks like rather than the "could not load" fallback.
  */
-set_transient( 'ef_settings_options_series', array( '3' => 'MK (default)', '4' => 'ARV' ), HOUR_IN_SECONDS );
-set_transient( 'ef_settings_options_templates', array( '17' => 'Arve (default)', '18' => 'Invoice EN' ), HOUR_IN_SECONDS );
+set_transient( 'arbictus_efin_settings_options_series', array( '3' => 'MK (default)', '4' => 'ARV' ), HOUR_IN_SECONDS );
+set_transient( 'arbictus_efin_settings_options_templates', array( '17' => 'Arve (default)', '18' => 'Invoice EN' ), HOUR_IN_SECONDS );
 set_transient(
-	'ef_settings_options_articles',
+	'arbictus_efin_settings_options_articles',
 	array( '204' => 'Sales 22%', '205' => 'Sales 9%', '206' => 'Sales 0% (EU)' ),
 	HOUR_IN_SECONDS
 );
@@ -144,23 +144,23 @@ $demo_orders = array(
 		'completed',
 		array( 0 => 1, 2 => 2 ),
 		array(
-			'_ef_sale_invoice_id'     => 48123,
-			'_ef_sale_invoice_number' => 'MK-1041',
-			'_ef_payment_mode'        => 'transfer',
-			'_ef_delivered_at'        => '2026-08-14 11:02:37',
-			'_ef_synced_at'           => '2026-08-14 11:02:31',
-			'_ef_sync_complete'       => 'yes',
+			'_arbictus_efin_sale_invoice_id'     => 48123,
+			'_arbictus_efin_sale_invoice_number' => 'MK-1041',
+			'_arbictus_efin_payment_mode'        => 'transfer',
+			'_arbictus_efin_delivered_at'        => '2026-08-14 11:02:37',
+			'_arbictus_efin_synced_at'           => '2026-08-14 11:02:31',
+			'_arbictus_efin_sync_complete'       => 'yes',
 		),
 	),
 	array(
 		'completed',
 		array( 1 => 3, 3 => 1 ),
 		array(
-			'_ef_sale_invoice_id'     => 48124,
-			'_ef_sale_invoice_number' => 'MK-1042',
-			'_ef_payment_mode'        => 'cash',
-			'_ef_synced_at'           => '2026-08-15 09:41:12',
-			'_ef_sync_complete'       => 'yes',
+			'_arbictus_efin_sale_invoice_id'     => 48124,
+			'_arbictus_efin_sale_invoice_number' => 'MK-1042',
+			'_arbictus_efin_payment_mode'        => 'cash',
+			'_arbictus_efin_synced_at'           => '2026-08-15 09:41:12',
+			'_arbictus_efin_sync_complete'       => 'yes',
 		),
 	),
 	array( 'processing', array( 2 => 1 ), array() ),
@@ -168,8 +168,8 @@ $demo_orders = array(
 		'completed',
 		array( 3 => 1 ),
 		array(
-			'_ef_last_error' => 'Client upsert failed: registry code is required for company invoices.',
-			'_ef_attempts'   => 2,
+			'_arbictus_efin_last_error' => 'Client upsert failed: registry code is required for company invoices.',
+			'_arbictus_efin_attempts'   => 2,
 		),
 	),
 );

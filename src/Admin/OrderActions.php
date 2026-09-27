@@ -27,9 +27,9 @@ use WC_Order;
  */
 class OrderActions implements ServiceInterface {
 
-	public const ACTION_SYNC = 'ef_send_to_efinancials';
+	public const ACTION_SYNC = 'arbictus_efin_send_to_efinancials';
 
-	public const ACTION_DELIVER = 'ef_deliver_invoice';
+	public const ACTION_DELIVER = 'arbictus_efin_deliver_invoice';
 
 	/**
 	 * Provide arguments.

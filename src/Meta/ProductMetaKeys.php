@@ -14,5 +14,5 @@ namespace Aanndryyyy\EFinancialsPlugin\Meta;
  */
 final class ProductMetaKeys {
 
-	public const PRODUCTS_ID = '_ef_products_id';
+	public const PRODUCTS_ID = '_arbictus_efin_products_id';
 }

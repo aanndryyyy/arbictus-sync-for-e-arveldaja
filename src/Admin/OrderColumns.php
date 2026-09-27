@@ -49,7 +49,7 @@ class OrderColumns implements ServiceInterface {
 
 		// Insert before WooCommerce's actions column, which conventionally stays last.
 		if ( ! isset( $columns['wc_actions'] ) ) {
-			$columns['ef_invoice'] = $label;
+			$columns['arbictus_efin_invoice'] = $label;
 
 			return $columns;
 		}
@@ -58,7 +58,7 @@ class OrderColumns implements ServiceInterface {
 
 		foreach ( $columns as $key => $value ) {
 			if ( $key === 'wc_actions' ) {
-				$reordered['ef_invoice'] = $label;
+				$reordered['arbictus_efin_invoice'] = $label;
 			}
 
 			$reordered[ $key ] = $value;
@@ -75,7 +75,7 @@ class OrderColumns implements ServiceInterface {
 	 */
 	public function render_legacy_column( string $column, int $post_id ): void {
 
-		if ( $column !== 'ef_invoice' ) {
+		if ( $column !== 'arbictus_efin_invoice' ) {
 			return;
 		}
 
@@ -94,7 +94,7 @@ class OrderColumns implements ServiceInterface {
 	 */
 	public function render_hpos_column( string $column, WC_Order|int $order ): void {
 
-		if ( $column !== 'ef_invoice' ) {
+		if ( $column !== 'arbictus_efin_invoice' ) {
 			return;
 		}
 

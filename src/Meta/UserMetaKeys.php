@@ -14,5 +14,5 @@ namespace Aanndryyyy\EFinancialsPlugin\Meta;
  */
 final class UserMetaKeys {
 
-	public const CLIENTS_ID = '_ef_clients_id';
+	public const CLIENTS_ID = '_arbictus_efin_clients_id';
 }

@@ -76,7 +76,7 @@ sequenceDiagram
 
 ### Products
 
-Products are synchronised using product meta `_ef_products_id` and e-Financials `products_id`. Opt-in auto-sync on product save is available in settings. Shipping/fees use shared generic products (`WC-SHIP`, `WC-FEE`).
+Products are synchronised using product meta `_arbictus_efin_products_id` and e-Financials `products_id`. Opt-in auto-sync on product save is available in settings. Shipping/fees use shared generic products (`WC-SHIP`, `WC-FEE`).
 
 ### Invoicing
 

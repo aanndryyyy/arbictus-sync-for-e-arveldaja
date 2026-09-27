@@ -34,14 +34,14 @@ if ( ! class_exists( 'WC_Integration' ) ) {
 
 if ( ! function_exists( 'get_option' ) ) {
 	/**
-	 * In-memory option store driven by $GLOBALS['ef_test_options'].
+	 * In-memory option store driven by $GLOBALS['arbictus_efin_test_options'].
 	 *
 	 * @param string $key      Option name.
 	 * @param mixed  $fallback Default value.
 	 */
 	function get_option( string $key, mixed $fallback = false ): mixed {
 
-		return $GLOBALS['ef_test_options'][ $key ] ?? $fallback;
+		return $GLOBALS['arbictus_efin_test_options'][ $key ] ?? $fallback;
 	}
 }
 

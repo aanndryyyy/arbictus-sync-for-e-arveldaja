@@ -14,13 +14,13 @@ namespace Aanndryyyy\EFinancialsPlugin\Queue;
  */
 class JobScheduler {
 
-	public const HOOK_SYNC_ORDER = 'ef_sync_order_to_efinancials';
+	public const HOOK_SYNC_ORDER = 'arbictus_efin_sync_order_to_efinancials';
 
-	public const HOOK_CREDIT_INVOICE = 'ef_credit_invoice_to_efinancials';
+	public const HOOK_CREDIT_INVOICE = 'arbictus_efin_credit_invoice_to_efinancials';
 
-	public const HOOK_SWEEP_UNSYNCED = 'ef_sweep_unsynced_orders';
+	public const HOOK_SWEEP_UNSYNCED = 'arbictus_efin_sweep_unsynced_orders';
 
-	public const GROUP = 'e-financials';
+	public const GROUP = 'arbictus-efin';
 
 	/**
 	 * Enqueue order sync job (idempotent if already pending).
@@ -65,7 +65,7 @@ class JobScheduler {
 		$next = \wp_next_scheduled( self::HOOK_SWEEP_UNSYNCED );
 
 		if ( $next === false ) {
-			\wp_schedule_event( \time() + 300, 'ef_every_five_minutes', self::HOOK_SWEEP_UNSYNCED );
+			\wp_schedule_event( \time() + 300, 'arbictus_efin_every_five_minutes', self::HOOK_SWEEP_UNSYNCED );
 		}
 	}
 

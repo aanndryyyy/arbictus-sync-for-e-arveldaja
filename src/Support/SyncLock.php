@@ -133,6 +133,6 @@ final class SyncLock {
 	 */
 	private static function name( string $key ): string {
 
-		return 'ef_sync_lock_' . \sanitize_key( $key );
+		return 'arbictus_efin_sync_lock_' . \sanitize_key( $key );
 	}
 }

@@ -30,7 +30,7 @@ $settings['api_key_environment'] = 'api_environment_test';
 update_option( '${ SETTINGS_OPTION }', $settings );
 
 foreach ( array( 'series', 'templates', 'articles' ) as $bucket ) {
-	delete_transient( 'ef_settings_options_' . $bucket );
+	delete_transient( 'arbictus_efin_settings_options_' . $bucket );
 }
 
 echo 'EF_BACKUP' . $backup . 'EF_END';
@@ -51,7 +51,7 @@ $backup = unserialize( base64_decode( '${ backup }' ) );
 update_option( '${ SETTINGS_OPTION }', is_array( $backup ) ? $backup : array() );
 
 foreach ( array( 'series', 'templates', 'articles' ) as $bucket ) {
-	delete_transient( 'ef_settings_options_' . $bucket );
+	delete_transient( 'arbictus_efin_settings_options_' . $bucket );
 }
 echo 'ok';
 ` );

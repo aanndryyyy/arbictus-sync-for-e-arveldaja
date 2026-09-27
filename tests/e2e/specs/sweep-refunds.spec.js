@@ -32,7 +32,7 @@ $result = array();
 
 $pending = function () {
 	return as_get_scheduled_actions( array(
-		'hook'     => 'ef_sync_order_to_efinancials',
+		'hook'     => 'arbictus_efin_sync_order_to_efinancials',
 		'status'   => ActionScheduler_Store::STATUS_PENDING,
 		'per_page' => 100,
 	) );
@@ -73,7 +73,7 @@ try {
 	$drain();
 
 	try {
-		do_action( 'ef_sweep_unsynced_orders' );
+		do_action( 'arbictus_efin_sweep_unsynced_orders' );
 		$result['swept'] = true;
 		$result['error'] = '';
 	} catch ( Throwable $e ) {
@@ -142,7 +142,7 @@ $result = array( 'hpos' => false, 'ids' => array(), 'queued' => array() );
 
 $pending = function () {
 	return as_get_scheduled_actions( array(
-		'hook'     => 'ef_sync_order_to_efinancials',
+		'hook'     => 'arbictus_efin_sync_order_to_efinancials',
 		'status'   => ActionScheduler_Store::STATUS_PENDING,
 		'per_page' => 200,
 	) );
@@ -170,17 +170,17 @@ try {
 		$order->set_status( 'completed' );
 
 		if ( 'already_complete' === $kind ) {
-			$order->update_meta_data( '_ef_sync_complete', 1 );
+			$order->update_meta_data( '_arbictus_efin_sync_complete', 1 );
 		}
 
 		if ( 'backing_off' === $kind ) {
-			$order->update_meta_data( '_ef_next_attempt_at', (string) ( time() + 3600 ) );
-			$order->update_meta_data( '_ef_attempts', 3 );
+			$order->update_meta_data( '_arbictus_efin_next_attempt_at', (string) ( time() + 3600 ) );
+			$order->update_meta_data( '_arbictus_efin_attempts', 3 );
 		}
 
 		if ( 'backoff_expired' === $kind ) {
-			$order->update_meta_data( '_ef_next_attempt_at', (string) ( time() - 60 ) );
-			$order->update_meta_data( '_ef_attempts', 3 );
+			$order->update_meta_data( '_arbictus_efin_next_attempt_at', (string) ( time() - 60 ) );
+			$order->update_meta_data( '_arbictus_efin_attempts', 3 );
 		}
 
 		$order->save();
@@ -189,7 +189,7 @@ try {
 
 	// Creating the orders above enqueued some of them via the status hook.
 	$drain();
-	do_action( 'ef_sweep_unsynced_orders' );
+	do_action( 'arbictus_efin_sweep_unsynced_orders' );
 
 	foreach ( $pending() as $action ) {
 		$args = $action->get_args();

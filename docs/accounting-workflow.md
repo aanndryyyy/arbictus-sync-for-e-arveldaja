@@ -54,7 +54,7 @@ sequenceDiagram
 | --- | --- |
 | 0. Series / template | **invoice_series** + template in settings (P0 setup) |
 | 1. Trigger | `payment_complete` / `completed` hooks + queue retry |
-| 2. Guard | `_ef_sale_invoice_id`, `_ef_clients_id`; refuse duplicates |
+| 2. Guard | `_arbictus_efin_sale_invoice_id`, `_arbictus_efin_clients_id`; refuse duplicates |
 | 3. Customer | Explicit **clients** upsert first |
 | 4. Products | **products** ensure; rows require `products_id` |
 | 5. Invoice | **sale_invoices** create (+ `items[]`) then **register** |
@@ -93,7 +93,7 @@ Existing plugin settings keys already align: `api_key_id`, `api_key_public`, `ap
 | Company registry code (future checkout field) | `code` | | |
 | VAT number | `invoice_vat_no` | | |
 | Always for shop buyers | `is_client=true`, `is_supplier=false`, `cl_code_country`, `is_member`, `send_invoice_to_email`, `send_invoice_to_accounting_email` | required by client SDK | |
-| Match existing | Search `clients()->all(page, modifiedSince)` by email/`code`; store `_ef_clients_id` on order/customer | `GET /clients` | |
+| Match existing | Search `clients()->all(page, modifiedSince)` by email/`code`; store `_arbictus_efin_clients_id` on order/customer | `GET /clients` | |
 
 **Required create fields (SDK):** `is_client`, `is_supplier`, `name`, `cl_code_country`, `is_member`, `send_invoice_to_email`, `send_invoice_to_accounting_email`.
 
@@ -106,7 +106,7 @@ Existing plugin settings keys already align: `api_key_id`, `api_key_public`, `ap
 | Description | `description` | | |
 | Regular/price | `sales_price`, `price_currency` | | |
 | Tax class / article mapping (settings) | `cl_sale_articles_id` | from `salesArticles()->all()` | `GET /sale_articles` |
-| Link | product meta `_ef_products_id` | `get` / `update` / `deactivate` | `GET|PATCH /products/{id}`, deactivate/reactivate |
+| Link | product meta `_arbictus_efin_products_id` | `get` / `update` / `deactivate` | `GET|PATCH /products/{id}`, deactivate/reactivate |
 | Import / reconcile | `products()->all($page, $modifiedSince)` | | `GET /products?modified_since=` |
 
 Invoice rows **require** `products_id`. For orders whose lines lack a linked product, create/find a generic “WooCommerce line” / shipping / fee product first.
@@ -128,7 +128,7 @@ Invoice rows **require** `products_id`. For orders whose lines lack a linked pro
 | Shipping / fees | synthetic products or dedicated SKUs | | |
 | Order ref | `notes` / `additional_info_content` including `WC-{id}` | | |
 | Confirm | after create | `$client->salesInvoices()->register($id)` | `PATCH /sale_invoices/{id}/register` |
-| Persist | `_ef_sale_invoice_id`, `_ef_sale_invoice_number` | `get($id)` | `GET /sale_invoices/{id}` |
+| Persist | `_arbictus_efin_sale_invoice_id`, `_arbictus_efin_sale_invoice_number` | `get($id)` | `GET /sale_invoices/{id}` |
 
 **Required invoice fields (SDK/OpenAPI):** `sale_invoice_type`, `cl_templates_id`, `clients_id`, `cl_countries_id`, `number_suffix`, `create_date`, `journal_date`, `term_days`, `cl_currencies_id`, `show_client_balance`.
 
@@ -156,7 +156,7 @@ Flow:
 
 1. Create invoice **with** cash fields populated (order already paid).
 2. `salesInvoices()->register($id)`.
-3. Persist `_ef_payment_mode = cash` (no separate transaction id).
+3. Persist `_arbictus_efin_payment_mode = cash` (no separate transaction id).
 
 Pros: one API object.  
 Cons: not a proper bank receipt; weaker for bank-transfer / payout reconciliation.
@@ -184,7 +184,7 @@ Also set `clients_id`, `description`, optional `ref_number` (WC order / Estonian
      // Distributions link money to the invoice (AR settlement)
      [ 'related_table' => /* sale invoice table name */, 'related_id' => $saleInvoiceId, 'amount' => $total ]
    ])
-4. Store _ef_transaction_id
+4. Store _arbictus_efin_transaction_id
 ```
 
 `register` accepts `TransactionsDistributions[]` with `related_table`, `related_id`, optional `related_sub_id`, `amount`. Exact `related_table` string for sale invoices must be confirmed against the demo API / RIK docs before shipping (treat as a spike item).
@@ -207,7 +207,7 @@ Settings UI (under existing `WC_Integration`):
 2. Per-gateway override map: `payment_method_id` → mode + `cash_accounts_id` **or** `accounts_dimensions_id` (+ optional `bank_accounts_id` for display/ref).
 3. Load picklists from `$client->bank()->all()` and `$client->accountDimensions()->all()` / `accounts()->all()`.
 
-Idempotency: if `_ef_transaction_id` or `_ef_payment_mode=cash` already set, skip. On retry after invoice exists but payment failed, only re-run the payment step.
+Idempotency: if `_arbictus_efin_transaction_id` or `_arbictus_efin_payment_mode=cash` already set, skip. On retry after invoice exists but payment failed, only re-run the payment step.
 
 Partial refunds: do **not** use cash fields; create a credit invoice (or negative settlement transaction) for the refunded amount only.
 
@@ -236,7 +236,7 @@ flowchart TD
 	B -->|transaction| E[Create unpaid sale invoice + register]
 	E --> F[transactions create]
 	F --> G[transactions register with distribution to invoice]
-	D --> H[Store _ef_payment_mode / _ef_transaction_id]
+	D --> H[Store _arbictus_efin_payment_mode / _arbictus_efin_transaction_id]
 	G --> H
 	Z --> H
 ```
@@ -283,9 +283,9 @@ Nothing in `aanndryyyy/e-financials-php-client` or the OpenAPI talks to payment 
 | | Register credit | `register($id)` | `PATCH …/register` |
 | Partial refund (`woocommerce_order_partially_refunded`) | Credit for refunded lines/amount only | same, amount from `WC_Order_Refund` | |
 | Payment reversal | If Option B: outgoing/settlement transaction or credit `paid_in_cash` handling | `transactions()->create` + `register` | `/transactions` |
-| Persist | `_ef_credit_sale_invoice_id` (+ list meta for multiple partials) | | |
+| Persist | `_arbictus_efin_credit_sale_invoice_id` (+ list meta for multiple partials) | | |
 
-Guards: require `_ef_sale_invoice_id`; skip if credit already linked for that refund id (`_ef_refund_{refund_id}_credit_id`).
+Guards: require `_arbictus_efin_sale_invoice_id`; skip if credit already linked for that refund id (`_arbictus_efin_refund_{refund_id}_credit_id`).
 
 ### 2.7 PDF + customer delivery — in scope
 
@@ -298,7 +298,7 @@ Guards: require `_ef_sale_invoice_id`; skip if credit already linked for that re
 | E-invoice (machine XML) | When `can_send_einvoice` | `deliver` with `send_einvoice=true` | same |
 | WC email note | `woocommerce_email_after_order_table` | Link/number from meta | — |
 
-Auto-deliver only after successful **register**; store `_ef_delivered_at` / last delivery error. Manual order action: “Deliver e-Financials invoice”.
+Auto-deliver only after successful **register**; store `_arbictus_efin_delivered_at` / last delivery error. Manual order action: “Deliver e-Financials invoice”.
 
 ### 2.8 Invoice series — in scope (setup + sync)
 
@@ -337,22 +337,22 @@ Keep the admin surface minimal, retry reliably, and route all API I/O through **
 
 | Meta key | Purpose |
 | --- | --- |
-| `_ef_clients_id` | Linked e-Financials client |
-| `_ef_sale_invoice_id` | Linked sale invoice |
-| `_ef_sale_invoice_number` | Human number |
-| `_ef_payment_mode` | `cash` \| `transaction` \| `none` |
-| `_ef_transaction_id` | Linked payment transaction (Option B) |
-| `_ef_delivered_at` | Last successful `deliver` |
-| `_ef_synced_at` | Success timestamp (invoice registered) |
-| `_ef_last_error` | Last API/validation error |
-| `_ef_credit_sale_invoice_id` | Latest credit invoice |
-| `_ef_refund_{id}_credit_id` | Per-refund credit link (partials) |
+| `_arbictus_efin_clients_id` | Linked e-Financials client |
+| `_arbictus_efin_sale_invoice_id` | Linked sale invoice |
+| `_arbictus_efin_sale_invoice_number` | Human number |
+| `_arbictus_efin_payment_mode` | `cash` \| `transaction` \| `none` |
+| `_arbictus_efin_transaction_id` | Linked payment transaction (Option B) |
+| `_arbictus_efin_delivered_at` | Last successful `deliver` |
+| `_arbictus_efin_synced_at` | Success timestamp (invoice registered) |
+| `_arbictus_efin_last_error` | Last API/validation error |
+| `_arbictus_efin_credit_sale_invoice_id` | Latest credit invoice |
+| `_arbictus_efin_refund_{id}_credit_id` | Per-refund credit link (partials) |
 
 ### Suggested product meta
 
 | Meta key | Purpose |
 | --- | --- |
-| `_ef_products_id` | Linked e-Financials product (`products_id` for invoice rows) |
+| `_arbictus_efin_products_id` | Linked e-Financials product (`products_id` for invoice rows) |
 
 ---
 

@@ -59,7 +59,7 @@ class EFinancialsIntegration extends \WC_Integration {
 
 	public const SETTING_KEY_PRODUCT_AUTO_SYNC = 'product_auto_sync';
 
-	private const OPTIONS_TRANSIENT_PREFIX = 'ef_settings_options_';
+	private const OPTIONS_TRANSIENT_PREFIX = 'arbictus_efin_settings_options_';
 
 	private const OPTIONS_TRANSIENT_TTL = 3600;
 

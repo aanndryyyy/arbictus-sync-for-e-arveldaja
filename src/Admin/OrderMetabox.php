@@ -23,7 +23,7 @@ use WC_Order;
  */
 class OrderMetabox implements ServiceInterface {
 
-	public const AJAX_PDF = 'ef_download_invoice_pdf';
+	public const AJAX_PDF = 'arbictus_efin_download_invoice_pdf';
 
 	/**
 	 * Provide arguments.
@@ -57,7 +57,7 @@ class OrderMetabox implements ServiceInterface {
 	public function add_meta_box(): void {
 
 		\add_meta_box(
-			'ef_order_metabox',
+			'arbictus_efin_order_metabox',
 			__( 'e-Financials', 'arbictus-sync-for-e-arveldaja' ),
 			[ $this, 'render_metabox' ],
 			'shop_order',

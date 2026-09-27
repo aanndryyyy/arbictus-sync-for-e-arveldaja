@@ -291,7 +291,7 @@ class ProductEnsureService {
 	private function ensure_generic( string $code, string $name ): int {
 
 		$code       = $this->normalize_code( $code );
-		$option_key = 'ef_generic_products_id_' . \sanitize_key( $code );
+		$option_key = 'arbictus_efin_generic_products_id_' . \sanitize_key( $code );
 		$cached_raw = \get_option( $option_key, 0 );
 		$cached     = \is_numeric( $cached_raw ) ? (int) $cached_raw : 0;
 
