@@ -11,7 +11,7 @@
  * Plugin Name: Arbictus Sync for e-Arveldaja
  * Plugin URI: https://github.com/aanndryyyy/arbictus-sync-for-e-arveldaja
  * Description: Bookkeeping sync between your shop and e-Financials (E-arveldaja liidestus).
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Arbictus OÜ
  * Author URI: https://arbictus.eu
  *
