@@ -1,5 +1,5 @@
 {
-  "name": "arbictus-sync-for-e-financials-woocommerce-integration",
+  "name": "arbictus-sync-for-e-arveldaja",
   "private": true,
   "devDependencies": {
     "@playwright/test": "^1.51.0",

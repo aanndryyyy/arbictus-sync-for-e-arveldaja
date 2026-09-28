@@ -11,7 +11,7 @@
 	},
 	"plugins": [
 		"woocommerce",
-		"https://raw.githubusercontent.com/aanndryyyy/arbictus-sync-for-e-financials-woocommerce-integration/playground-builds/main.zip"
+		"https://raw.githubusercontent.com/aanndryyyy/arbictus-sync-for-e-arveldaja/playground-builds/main.zip"
 	],
 	"steps": [
 		{

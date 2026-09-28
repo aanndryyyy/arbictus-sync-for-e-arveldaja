@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6e7967546d35017825d7d0ce37cf12f",
+    "content-hash": "e11a05206489ec9355fdcb3a4cefa1bc",
     "packages": [
         {
             "name": "aanndryyyy/e-financials-php-client",
