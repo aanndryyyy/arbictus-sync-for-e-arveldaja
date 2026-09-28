@@ -63,7 +63,7 @@ jobs:
         run: cd build && zip -qr "${{ steps.build.outputs.name }}.zip" ${PLUGIN_SLUG}
 
       - name: Upload plugin zip as a workflow artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: plugin-zip
           path: build/${{ steps.build.outputs.name }}.zip
@@ -98,7 +98,7 @@ jobs:
 
       - name: Comment the Playground link on the pull request
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         env:
           ZIP_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ steps.publish.outputs.sha }}/${{ steps.build.outputs.name }}.zip
         with:
