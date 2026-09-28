@@ -22,6 +22,11 @@ on:
 permissions:
   contents: write
 
+# Shared with update-wordpress-org-assets.yml; see the note there.
+concurrency:
+  group: wordpress-org-svn
+  cancel-in-progress: false
+
 jobs:
   deploy:
     name: Deploy

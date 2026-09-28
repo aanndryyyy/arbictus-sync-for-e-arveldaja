@@ -4,6 +4,10 @@ name: Update WordPress.org readme and assets
 # without cutting a release. Use this for copy fixes, screenshot refreshes and
 # "Tested up to" bumps — WordPress.org reads those from trunk, not from the
 # stable tag.
+#
+# IGNORE_OTHER_FILES copies only readme.txt into trunk (and the stable tag)
+# instead of rsyncing the checkout. The checkout has no vendor/ — that only
+# exists after bin/build-zip.sh — so a full sync would fail or try to delete it.
 
 on:
   push:
@@ -16,6 +20,12 @@ on:
 
 permissions:
   contents: read
+
+# Shared with the release deploy so a release push (readme.txt changed and a
+# release published) doesn't run two SVN commits against trunk at once.
+concurrency:
+  group: wordpress-org-svn
+  cancel-in-progress: false
 
 jobs:
   update:
@@ -33,3 +43,4 @@ jobs:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SLUG: arbictus-sync-for-e-arveldaja
           ASSETS_DIR: .wordpress-org
+          IGNORE_OTHER_FILES: true
