@@ -6,6 +6,6 @@
       "thecodingmachine/phpstan-strict-rules": "^2.0",
       "ergebnis/phpstan-rules": "^2.13",
       "szepeviktor/phpstan-wordpress": "^2.0",
-      "php-stubs/woocommerce-stubs": "^10.9"
+      "php-stubs/woocommerce-stubs": "^11.2"
   }
 }

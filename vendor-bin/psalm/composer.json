@@ -5,6 +5,6 @@
   },
   "require": {
     "vimeo/psalm": "^6.16",
-    "php-stubs/woocommerce-stubs": "^10.9"
+    "php-stubs/woocommerce-stubs": "^11.2"
   }
 }
