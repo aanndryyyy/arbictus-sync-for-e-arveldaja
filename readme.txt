@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 8.2
 Requires Plugins: woocommerce
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,10 @@ CRUD API, so it works with both the legacy post storage and HPOS.
 3. The order metabox showing invoice status and the invoice PDF download.
 
 == Changelog ==
+
+= 1.1.2 =
+* Tested with WooCommerce 11.2.
+* Updated the bundled e-Financials API client to 1.0.1.
 
 = 1.1.1 =
 * The Plugin URI now points at the renamed GitHub repository.
